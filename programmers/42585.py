@@ -7,7 +7,7 @@ https://programmers.co.kr/learn/courses/30/lessons/42585?language=python3
 3. 각 쇠막대기를 자르는 레이저는 적어도 하나는 존재
 4. 레이저는 어떤 쇠막대기의 양 끝점과도 겹치지 않음
 
-시간 초과 뜸.... ㅂㄷㅂㄷ
+시간 초과 뜸....
 '''
 
 str = "()(((()())(())()))(())"
@@ -74,3 +74,22 @@ def solution(str):
                 stack.append(i)#스택에 추가
         tmp = i#이전에 나온 값 저장
     return pieces_count
+
+#정답
+def solution(arrangement):
+    answer = 0
+    stack = 0
+    laseron = False
+    for p in arrangement:
+        if p == '(':
+            laseron = True
+            stack += 1
+        else:
+            if laseron==True:
+                answer += stack-1
+                laseron=False
+            else:
+                answer += 1
+            stack -= 1
+
+    return answer
