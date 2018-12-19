@@ -47,8 +47,9 @@ def solution(bridge_length, weight, truck_weights):
     count = 0
     while bridge_queue != truck_queue:
         bridge_queue = deque([(i,j+1) for i,j in bridge_queue if j+1 is not bridge_length])
-        if truck_queue and (weight - sum(int(i) for i,j in bridge_queue)) >= truck_queue[0]:
-            bridge_queue.append((truck_queue.popleft(),0))
+        if truck_queue:
+            if (weight - sum(int(i) for i,j in bridge_queue)) >= truck_queue[0]:
+                bridge_queue.append((truck_queue.popleft(),0))
         count += 1
     return count
 solution(2,10,[7,4,5,6])
