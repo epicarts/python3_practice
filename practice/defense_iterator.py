@@ -79,16 +79,16 @@ class ReadVisits(object):
     def __init__(self, data_path):
         self.data_path = data_path
 
-    def __iter__(self):
+    def __iter__(self):#이터레이터를 호출할때 이걸 호출
         with open(self.data_path) as f:#입력데이터를 여러번 불러오는게 단점.
             for line in f:
-                yield int(line)
+                yield int(line)#yield 이기 떄문에 라인한줄씩 읽어올때마다 호출됨(next)
 
-def normalize(numbers):
+def normalize(numbers):#여기서 numbers = ReadVisits객체임
     #sum 메서드가 새 이터레이터 객체를 할당하려고 ReadVisits.__iter__를 호출함
     total = sum(numbers)
     result = []
-    for value in numbers:# 도시 개별의 값으로 for문
+    for value in numbers:#
         percent = 100 * value / total
         result.append(percent)#각 계산한 식을 append를 이용하여 리스트에 추가
     return result
@@ -96,3 +96,39 @@ def normalize(numbers):
 visits = ReadVisits('text.txt')#class 객체 생성
 percentages = normalize(visits)
 percentages
+
+#내장 함수 iter에 이터레이터를 넘기면 이터레이터 자체가 반환됨.
+#반면에 iter에 컨테이너 타입을 넘기면 매번 새 이터레이터 객체가 반환됨
+
+#normalize_copy 처럼 입력 이터레이터 전체를 복사하고 싶지는 않지만, 입력데이터를 여러번 순회
+def normalize_defensive(numbers):
+    #iter() 만약 이터레이터가 들어오면 두번 호출해도 서로 같음. 이터레이터의 위치 주소를 이미 가지고 있음
+    #컨테이너로 이터레이터가 들어오면 Class.__iter__ 를 새로 생성하기 떄문에 주소가 달라짐
+    if iter(numbers) is iter(numbers): #이터레이터 -- 거부
+        raise TypeError('Must supply a container')
+    total = sum(numbers)
+    result = []
+    for value in numbers:
+        percent = 100 * value / total
+        result.append(percent)
+    return result
+
+visits = [15, 35, 80]
+type(visits)
+normalize_defensive(visits)
+visits = ReadVisits('text.txt')
+visits
+normalize_defensive(visits)
+visits
+it = iter(visits)
+iter(it)
+normalize_defensive(it)
+iter(it)
+iter(it)
+
+iter(visits)#첫번째 값을 반환
+iter(visits)#다음 값을 반환
+
+
+if iter(it) is iter(it):
+    print('test')
