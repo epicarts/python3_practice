@@ -96,6 +96,9 @@ class JsonMixin():
     def to_json(self):
         return json.dumps(self.to_dict())#to_dict호출
 
+import json
+import switch_case
+from switch import Switch
 
 class DatacenterRack(ToDictMixin, JsonMixin):
     def __init__(self, switch=None, machines=None):
