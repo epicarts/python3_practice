@@ -34,8 +34,8 @@ def run_sleep(period):
     #proc = subprocess.Popen(['sleep', str(period)])
     proc = subprocess.Popen([sys.executable,'D:\\github\\python3_practice\\practice\\print_process.py'],
                             stdout=subprocess.PIPE)
-    return proc
-    
+    return proc#프로세스
+
 start = time()
 procs =[]
 for _ in range(10):
