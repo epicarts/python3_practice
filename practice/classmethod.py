@@ -26,4 +26,3 @@ class PathInputData(InputData):#부모클래스 InputData 객체를 가져옴
         return open(self.path).read()
 
 #InputData 가 메인 그 아래 서브 클래스로 PathInputData()
-ㅁ 
