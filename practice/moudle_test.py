@@ -1,4 +1,13 @@
 import random
+import calculator
+from calculator import div
+
+
+add_result = calculator.add(10, 2)
+add_result
+
+
+
 
 a = random.random()
 b = random.randrange(1, 18)
