@@ -8,7 +8,10 @@ def mul(a, b):
     return a * b
 
 def div():
-    return a / b
+    try:
+        return a / b
+    except ZeroDivisionError as e:
+        raise e
 
 def mod(a, b):
     return a % b
