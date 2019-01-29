@@ -10,8 +10,6 @@ records = [json.loads(line) for line in open(path, encoding='UTF8')]
 records[0]
 records[0]['tz']
 
-
-
 time_zones = [rec['tz'] for rec in records if 'tz' in rec]
 time_zones
 
