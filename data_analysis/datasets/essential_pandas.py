@@ -149,4 +149,106 @@ df = DataFrame(np.random.normal(loc=0, scale= 0.01, size=(5,4)),
                )
 df.index.name = 'Date'
 df
-df.MSFT.corr(df.IBM)
+df.MSFT.corr(df.IBM)#NA가 아니고 연속하는 두 Series에 대해 상관관계를 계산
+df.MSFT.cov(df.IBM)# 공분산
+df.corr()#상관관계
+df.cov()#공분산
+obj = Series(['c', 'a', 'd', 'a', 'a', 'b', 'b', 'c', 'c'])
+obj
+obj.unique()
+obj.value_counts()
+pd.value_counts(obj.values, sort=False)
+mask = obj.isin(['b', 'c'])
+mask
+
+data = DataFrame({'Q1': [1, 3, 4, 3, 4],
+                  'Q2': [2, 3, 1, 2, 3],
+                  'Q3': [1, 5, 2, 4, 4]})
+data
+result = data.apply(pd.value_counts).fillna(0)
+result
+data
+result = data.apply(pd.value_counts).fillna(0)#안에 있는 값들을 인덱스로 만듬.
+
+string_data = Series(['aardvark', 'artichoke', np.nan, 'avocado'])
+string_data
+string_data.isnull()
+string_data[0] = None
+string_data.isnull()
+
+#누락된 데이터 골라내기
+from numpy import nan as NA
+
+
+data = Series([1, NA, 3.5, 7])
+data.dropna()
+data[data.notnull()]
+
+data = DataFrame([[1, 6.5, 3], [1, NA, NA],
+                  [NA, NA, NA], [NA, 6.5, 3]])
+data
+data.dropna()#NA가 있으면 싹다~ 드랍시킴.
+data.dropna(how='all')#전부 NA 인 로우만 드랍시킴
+data[4] = NA
+data
+data.dropna(axis=1, how='all')
+df = DataFrame(np.random.randn(7, 3))
+df.iloc[:4, 1] = NA; df.iloc[:2, 2] = NA
+df
+df.dropna(thresh=3)#몇개 이상만
+df.fillna(0)#0으로 누락된 값 채우기
+df.fillna({1: 0.5, 2: -1})
+_ = df.fillna(0, inplace=True)
+df
+
+df = DataFrame(np.random.randn(6, 3))
+df
+df.iloc[2:, 1] = NA; df.iloc[4:, 2] = NA
+df
+df.fillna(method='ffill')
+df.fillna(method='ffill', limit=2)#2만 채우기
+data = Series([1, NA, 3.5, NA, 7])
+data
+data.fillna(data.mean())
+'''
+계층적 색인
+'''
+data = Series(np.random.randn(10),
+              index=[['a', 'a', 'a', 'b', 'b', 'b', 'c', 'c', 'd', 'd'],
+                     [1, 2, 3, 1, 2, 3, 1, 2, 2, 3]])
+data
+data.index
+data['b']
+data['b':'c']
+data.loc[['b', 'd']]
+data[:, 2]#하위 객체
+data.unstack()
+data.unstack().stack()
+
+frame = DataFrame(np.arange(12).reshape((4, 3)),
+                  index=[['a', 'a', 'b', 'b'], [1, 2, 1, 2]],
+                  columns=[['Ohio', 'Ohio', 'Colorado'],
+                          ['Green', 'Red', 'Green']])
+frame
+frame.index.names = ['key1', 'key2']
+frame.columns.names = ['state', 'color']
+frame
+frame['Ohio']
+frame.unstack().unstack()
+
+frame.sum(level='key2')#key2를 기준으로 값을 합침
+frame.sum(level='color', axis=1)
+frame
+
+frame = DataFrame({'a': range(7), 'b': range(7, 0, -1),
+                  'c': ['one', 'one', 'one', 'two', 'two', 'two','two'],
+                  'd': [0, 1, 2, 0 ,1, 2, 3]})
+frame
+frame2 = frame.set_index(['c', 'd'])
+frame2
+frame2 = frame.set_index(['c', 'd'], drop=False)
+frame2
+frame2.reset_index()
+ser = Series(np.arange(3.), index=['a', 'b', 'c'])
+ser[-1]
+ser
