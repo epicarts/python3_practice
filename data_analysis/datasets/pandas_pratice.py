@@ -60,3 +60,24 @@ frame2
 
 del frame2['eastern']
 frame2
+pop = {'asd': {2001: 2.4, 2002: 2.9},
+       'Ohio': {2000: 1.5, 2001: 1.7, 2002: 3.6}}
+frame3 = DataFrame(pop)
+frame3.T
+DataFrame(pop, index=[2001, 2002])
+pop
+
+frame3.index.name = 'year'; frame3.columns.name = 'state'
+frame3
+frame3.values
+obj = Series(range(3), index=['a', 'b', 'c'])
+obj
+index = obj.index
+index
+index[1] = 'd' #인덱스 는 변경할 수 없다.
+
+index = pd.Index(np.arange(3))#인덱스 객체 생성
+index
+obj2 = Series([1.5, -2.5, 0], index=index)# 자료구조 사이에서 수정해야함..
+obj2
+frame3
