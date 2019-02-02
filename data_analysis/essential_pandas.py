@@ -251,4 +251,3 @@ frame2
 frame2.reset_index()
 ser = Series(np.arange(3.), index=['a', 'b', 'c'])
 ser[-1]
-ser
