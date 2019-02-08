@@ -55,14 +55,18 @@ df = pd.DataFrame(dict(x=x[:, 0], y=x[:, 1], label=y))
 df
 groups = df.groupby('label')
 groups
-
 fig, ax = plt.subplots()
 ax.margins(0.05)  # Optional, just adds 5% padding to the autoscaling
 for name, group in groups:#그룹별로 분해.
     ax.plot(group.x, group.y, marker='o', linestyle='', ms=6, label=name)
 ax.legend()
 plt.show()
-
+'''
+scale(X): 기본 스케일. 평균과 표준편차 사용
+robust_scale(X): 중앙값(median)과 IQR(interquartile range) 사용. 아웃라이어의 영향을 최소화
+minmax_scale(X): 최대/최소값이 각각 1, 0이 되도록 스케일링
+maxabs_scale(X): 최대절대값과 0이 각각 1, 0이 되도록 스케일링
+'''
 x.min()
 x.max()
 
@@ -74,17 +78,68 @@ x.mean()
 
 
 C = 1.0  # SVM 정규화 파라미터
+#linear로 나누어 보쟈
 models = svm.SVC(kernel='linear', C=C)
 models.fit(x, y)
 
-'''
-정수를 담은 이차원 리스트, mylist 가 solution 함수의 파라미터로 주어집니다.
- solution 함수가 mylist 각 원소의 길이를 담은 리스트를 리턴하도록 코드를
-작성해주세요.
+fig, sub = plt.subplots()
+plt.subplots_adjust(wspace=0.4, hspace=0.4)
+X0, X1 = x[:, 0], x[:, 1]
+xx, yy = make_meshgrid(X0, X1)
+plot_contours(sub, models, xx, yy,
+              cmap=plt.cm.coolwarm, alpha=0.8)
+sub.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=20, edgecolors='k')
+sub.set_xlim(-0.25, 1.25)
+sub.set_ylim(-0.25, 1.25)
+sub.set_xlabel('X')
+sub.set_ylabel('Y')
 
-input [[1], [2]] /[[1, 2], [3, 4], [5]]
+plt.show()
 
-output
- [1,1]
- [2,2,1]
-'''
+
+C = 1.0
+models = svm.SVC(kernel='poly', degree=3, C=C, gamma='auto')
+models.fit(x, y)
+
+fig, sub = plt.subplots()
+plt.subplots_adjust(wspace=0.4, hspace=0.4)
+
+X0, X1 = x[:, 0], x[:, 1]
+xx, yy = make_meshgrid(X0, X1)
+
+plot_contours(sub, models, xx, yy,
+              cmap=plt.cm.coolwarm, alpha=0.8)
+sub.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=20, edgecolors='k')
+sub.set_xlim(-0.25, 1.25)
+sub.set_ylim(-0.25, 1.25)
+sub.set_xlabel('X')
+sub.set_ylabel('Y')
+
+plt.show()
+
+
+# RBF
+C = 1.0  # SVM regularization parameter
+models = svm.SVC(kernel='rbf', gamma=0.7, C=C)
+models.fit(x, y)
+
+# title for the plots
+titles = ('SVC with RBF kernel')
+
+# Set-up 2x2 grid for plotting.
+fig, sub = plt.subplots()
+plt.subplots_adjust(wspace=0.4, hspace=0.4)
+
+X0, X1 = x[:, 0], x[:, 1]
+xx, yy = make_meshgrid(X0, X1)
+
+plot_contours(sub, models, xx, yy,
+              cmap=plt.cm.coolwarm, alpha=0.8)
+sub.scatter(X0, X1, c=y, cmap=plt.cm.coolwarm, s=20, edgecolors='k')
+sub.set_xlim(-0.25, 1.25)
+sub.set_ylim(-0.25, 1.25)
+sub.set_xlabel('X')
+sub.set_ylabel('Y')
+sub.set_title(titles)
+
+plt.show()
