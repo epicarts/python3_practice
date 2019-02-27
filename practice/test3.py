@@ -30,14 +30,15 @@ def quick_sort(list, left_index, right):
     else:
         high -= 1
         #가다가 값이 피봇보다 작으면 교환.
-    #교체 ?어떻게?
+    #교체 ?어떻게? 밑에
 
 
 
 #전역 변수
 list = [1, 10, 5, 8, 7, 6, 4, 3, 2, 9]
 
+quick_sort(list, list[0], list[9])
 #함수 하나 들어갈 때, 바라는건 최종적인 pibot의 위치.
 def quick_sort(list, left, right):
     p = left#처음 pivot 값은 가장 왼쪽에 있는 배열로 초기화
-    left = p+1
+    left = p+1#위치를 초기화
