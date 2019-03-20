@@ -10,8 +10,8 @@ def trans_fun(theta, F1):
 
 a = 9.81 # 중력임
 m1 = 0.04# 추1 무게.
-m2 = 0.04# 추2 무게.
-m3 = 0.02# 추3 무게.
+m2 = 0.02# 추2 무게.
+m3 = 0.04# 추3 무게.
 degree = [265.5, 14.5, 121]
 
 bais = np.array([1.0,0.0]) # 기저 벡터 (1,0)
@@ -31,7 +31,6 @@ R1 =  np.array([F1[0] + F2[0], F1[1] + F2[1]])# F1 + F2 = R1 합벡터
 R2 =  np.array([R1[0] + F3[0], R1[1] + F3[1]])# R1 + F3 = R2 합벡터
 
 #그래프 그리기
-
 soa = np.array([F1, F2, F3])
 U, V = zip(*soa)
 plt.figure(figsize=(9,9))
@@ -52,7 +51,7 @@ ax.quiver([0],[0], R2[0],R2[1], color ='blue', angles='xy', scale_units='xy', sc
 print("R1 vecotr: ", R1)
 print("R2 vecotr: ", R2)
 
-ax.set_xlim([-max(U) - 0.01, max(U) + 0.01])
-ax.set_ylim([-max(R1) - 0.1, max(R1) + 0.01])
+ax.set_xlim([-0.45, 0.45])
+ax.set_ylim([-0.45, 0.45])
 plt.draw()
 plt.show()
