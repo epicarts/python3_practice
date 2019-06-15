@@ -22,3 +22,11 @@ D:\github\python3_practice\practice
 plt.figure(figsize=(9,9))
 plt.scatter(a, time_list)
 plt.show()
+
+
+for i in range(1, 7):
+    print(" ".join([str(x) for x in list(range(1, i+1))]))
+
+
+for i in range(1, 7):
+    print("  " * (7-i) + " ".join([str(x) for x in list(range(i, 0, -1))]))
